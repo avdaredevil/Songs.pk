@@ -192,7 +192,7 @@ END {
             $URLCNT++;$CipherErrorCurr = -1
             Write-AP ">*Using URL-$URLCNT"
             foreach ($seq in (0,1,2),(0,2),(0,2,1)) {
-                foreach ($Suffix in ("(Songs.PK)|[Songspk.LIVE]"+(?:($Year -lt 2015){'|(Songspk.LINK)|(Songspk.LINK]|[Songspk.LINK]'}{})+"|(Songspk.LIVE)|(Songspk.SITE)|[Songspk.SITE]").split("|")) {
+                foreach ($Suffix in ("(Songs.PK)|[Songspk.LIVE]"+(?:($Year -lt 2015){'|(Songspk.LINK)|(Songspk.LINK]|[Songspk.LINK]'}{})+"|(Songspk.LIVE)|(Songspk.GURU)|[Songspk.GURU]").split("|")) {
                     $FL = $MovPattern[$Seq] -join "-"
                     if (test-path -type leaf -LiteralPath "$FL$Suffix.zip") {[Console]::CursorTop--;Clear-Line;Write-AP "!Using existing File";Return "$FL$Suffix.zip"}
                     if ($Dbg) {Write-AP ">>*Attempting [$(Proxy-Conv $URLSkeleton.replace('<URL>',$U).replace('<MovPattern>',"$FL$Suffix"))]"}
@@ -247,7 +247,7 @@ END {
     }
     function Format-Songs {
         pushd $Folder;$Fmt=1
-        $Filter = "(Songs\.pk|Songspk\.(name|LINK|SITE|LIVE))"
+        $Filter = "(Songs\.pk|Songspk\.(name|LINK|SITE|LIVE|GURU))"
         $Filter = "^ *(\[$Filter\] *(?<name>.+)|(?<name>.+?) *\[$Filter\]) *\.(?<ext>.+)$"
         $Files = ((ls -file) -match $Filter).Name
         if (!$Files) {Write-AP "!All songs seem formatted";popd;Return}
